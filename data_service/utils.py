@@ -1,5 +1,5 @@
 from pathlib import Path
-from config import SUPPORTED_FORMATS
+from data_service.config import SUPPORTED_FORMATS
 
 def get_warehouse_path():
     return Path("data/warehouse").resolve()
@@ -14,7 +14,7 @@ def scan_raw_directory(raw_path: str):
         # add to sources as separate tables
         if path.is_file() and path.suffix.lower() in SUPPORTED_FORMATS:
             sources.append({
-                "path": path,
+                "path": str(path),
                 "format": path.suffix.lower().lstrip("."),
                 "table_name": path.stem
             })
@@ -38,7 +38,7 @@ def scan_raw_directory(raw_path: str):
                     file_format = formats.pop()
 
                     sources.append({
-                        "path": path,
+                        "path": str(path),
                         "format": file_format.lstrip("."),
                         "table_name": path.name
                     })

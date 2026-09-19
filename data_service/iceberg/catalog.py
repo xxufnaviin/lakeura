@@ -1,7 +1,7 @@
 # main wrapper functions here
-from spark.session import create_spark
-from utils import scan_raw_directory
-from config import ICEBERG_CATALOG
+from data_service.spark.session import create_spark
+from data_service.utils import scan_raw_directory
+from data_service.config import ICEBERG_CATALOG
 
 
 class IcebergCatalog:
@@ -12,6 +12,7 @@ class IcebergCatalog:
     def onboard_tables(self, file_path:str):
         sources = scan_raw_directory(file_path)
         for source in sources:
+            print(source)
             if source["format"] == "csv":
                 df = self.session.read.csv(source["path"], header=True, inferSchema=True)
 

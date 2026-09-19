@@ -1,5 +1,5 @@
 from pyspark.sql import SparkSession
-from utils import get_warehouse_path
+from data_service.utils import get_warehouse_path
 
 
 
