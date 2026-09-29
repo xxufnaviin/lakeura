@@ -44,3 +44,38 @@ def scan_raw_directory(raw_path: str):
                     })
 
     return sources
+
+def unpack_values(data:dict):
+    columns = list(data.keys())
+    values = []
+
+    for value in data.values():
+        if value is None:
+            value = "NULL"
+
+        if isinstance(value, str):
+            escaped = value.replace("'", "''")
+            value =  f"'{escaped}'"
+
+        if isinstance(value, bool):
+            value = "TRUE" if value else "FALSE"
+
+        values.append(str(value))
+
+    return columns, ", ".join(values)
+
+def unpack_updates(data: dict):
+    updates = []
+
+    for column, value in data.items():
+        if value is None:
+            value = "NULL"
+        elif isinstance(value, str):
+            value = f"'{value.replace("'", "''")}'"
+        elif isinstance(value, bool):
+            value = "TRUE" if value else "FALSE"
+
+        updates.append(f"{column} = {value}")
+
+    return ", ".join(updates)
+    
