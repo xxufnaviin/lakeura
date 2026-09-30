@@ -1,4 +1,4 @@
-# setting configs here
+# configs for data service
 
 # default catalog name
 ICEBERG_CATALOG = "lakeura"

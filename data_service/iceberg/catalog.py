@@ -1,7 +1,7 @@
 # main wrapper functions here
 from data_service.spark.session import create_spark
 from data_service.utils import scan_raw_directory, unpack_values, unpack_updates
-from data_service.config import ICEBERG_CATALOG, DEFAULT_NAMESPACE
+from config.data_service import ICEBERG_CATALOG, DEFAULT_NAMESPACE
 
 
 class IcebergCatalog:

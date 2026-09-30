@@ -1,5 +1,5 @@
 from pathlib import Path
-from data_service.config import SUPPORTED_FORMATS
+from config.data_service import SUPPORTED_FORMATS
 
 def get_warehouse_path():
     return Path("data/warehouse").resolve()
