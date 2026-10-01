@@ -16,11 +16,15 @@ class Lakeura:
         self.prompt = self.llm.get_prompt()
         self.mcp_client = self.llm.get_mcp_client()
 
-
     # run agentic loop
     async def start_agent(self, user_message:str):
         # get tools from mcp client that is running
         tools = await self.mcp_client.get_tools()
+
+        # check if LLM model is available
+        if not self.llm.model:
+            print("No models configured. Agent unable to start.")
+            return
 
         # use langchain create agent function for agent with MCP tools exposure
         self.agent = create_agent(model = self.llm.model, tools = tools)

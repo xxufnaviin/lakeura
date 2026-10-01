@@ -12,7 +12,10 @@ class IcebergCatalog:
         self.session = create_spark(catalog_name=self.catalog)
 
     def execute(self, query:str):
-        return self.session.sql(query)
+        table = self.session.sql(query)
+        rows = table.collect()
+
+        return table, rows
     
     def onboard_tables(self, file_path:str):
         sources = scan_raw_directory(file_path)
@@ -26,24 +29,46 @@ class IcebergCatalog:
             # creates Iceberg tables from raw data files
             table = f"{self.catalog}.{self.namespace}.{source['table_name']}"
             df.writeTo(table).createOrReplace()
-            
 
+        return {
+            "status": "success",
+            "operation": "onboard_tables",
+            "tables_onboarded": len(sources)
+        }
+            
     def list_tables(self):
         query = f"SHOW TABLES in {self.catalog}.{self.namespace}"
+        _, rows = self.execute(query)
 
-        return self.execute(query)
+        return {
+            "tables": [row["tableName"] for row in rows],
+            "count": len(rows)
+        }
 
     def query(self, query:str):
-        return self.execute(query)
+        table, rows = self.execute(query)
+
+        return {
+            "columns": table.columns,
+            "rows": [row.asDict() for row in rows],
+            "row_count": len(rows)
+        }
 
     def insert_data(self, table:str, data:dict):
+        # column:value pair (data)
         columns, values = unpack_values(data)
         query = f"""INSERT INTO {self.catalog}.{self.namespace}.{table} ({", ".join(columns)}) 
                     VALUES ({values})"""
+        
+        self.execute(query)
 
-        return self.execute(query)
+        return  {
+            "status": "success",
+            "operation": "insert_data",
+        }
 
     def update_data(self, table: str, data: dict, condition: str):
+        # column:value (data)
         updates = unpack_updates(data)
 
         query = f"""
@@ -52,7 +77,12 @@ class IcebergCatalog:
             WHERE {condition}
         """
 
-        return self.execute(query)
+        self.execute(query)
+
+        return  {
+            "status": "success",
+            "operation": "insert_data",
+        }
     
     # add_column(table, ...)
     # drop_column(table, ...)

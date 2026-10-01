@@ -8,6 +8,10 @@ from config.secrets import GROQ_API_KEY
 class LLM:
     # init LLM client using GROQ API
     def __init__(self):
+        if not GROQ_API_KEY:
+            self.model = None
+            return
+            
         self.model = ChatGroq(api_key = GROQ_API_KEY, model = GROQ_MODEL)
 
     # create MCP client for Lakeura
