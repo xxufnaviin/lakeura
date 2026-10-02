@@ -1,3 +1,4 @@
+import sys
 from langchain_groq import ChatGroq
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_mcp_adapters.client import MultiServerMCPClient
@@ -16,13 +17,11 @@ class LLM:
 
     # create MCP client for Lakeura
     # creates the MCP server process
-    # helps connect to the server via stdio
     def get_mcp_client(self):
         return MultiServerMCPClient({
-                "lakeura": {
-                    "transport": "stdio",
-                    "command": "python",
-                    "args": ["mcp/server.py"],
+                    "lakeura": {
+                        "transport": "http",
+                        "url": "http://127.0.0.1:8000/mcp",
                     }
                 })
     

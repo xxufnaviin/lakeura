@@ -31,10 +31,8 @@ class Lakeura:
 
         # append user message into the chat template
         messages = self.prompt.format_messages(input=user_message)
-
         # start the agentic loop (async invoke)
         # langchain handles iteration internally and ouputs final results
         result = await self.agent.ainvoke({"messages": messages})
-
-        return result
+        return result["messages"][-1].content
     

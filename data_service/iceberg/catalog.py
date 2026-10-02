@@ -6,10 +6,16 @@ from config.data_service import ICEBERG_CATALOG, DEFAULT_NAMESPACE
 
 class IcebergCatalog:
     # initialize spark session with Iceberg Catalog
-    def initialize(self):
+    def __init__(self):
         self.catalog = ICEBERG_CATALOG
         self.namespace = DEFAULT_NAMESPACE
         self.session = create_spark(catalog_name=self.catalog)
+
+    def get_catalog(self):
+        return {
+            "catalog":self.catalog,
+            "namespace": self.namespace
+        }
 
     def execute(self, query:str):
         table = self.session.sql(query)
@@ -82,6 +88,20 @@ class IcebergCatalog:
         return  {
             "status": "success",
             "operation": "insert_data",
+        }
+    
+    def describe_table(self, table_name: str):
+        df = self.session.table(table_name)
+
+        return {
+            "table": table_name,
+            "columns": [
+                {
+                    "name": field.name,
+                    "type": str(field.dataType)
+                }
+                for field in df.schema.fields
+            ]
         }
     
     # add_column(table, ...)

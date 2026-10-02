@@ -71,7 +71,8 @@ def unpack_updates(data: dict):
         if value is None:
             value = "NULL"
         elif isinstance(value, str):
-            value = f"'{value.replace("'", "''")}'"
+            escaped_value = value.replace("'", "''")
+            value = f"'{escaped_value}'"
         elif isinstance(value, bool):
             value = "TRUE" if value else "FALSE"
 
