@@ -25,11 +25,9 @@ class LLM:
                     }
                 })
     
-    # define base prompt for Lakeura Agent
-    def get_prompt(self):
-        return ChatPromptTemplate.from_messages([
-                ("system", 
-                """
+    # define base system prompt for Lakeura Agent
+    def get_system_prompt(self):
+        return """
                 You are Lakeura, an AI data assistant.
 
                 You help users manage and interact with their local Iceberg data warehouse.
@@ -59,9 +57,4 @@ class LLM:
                 - If the requested data has not been onboarded and no raw data location
                 has been provided, ask the user for the location of the CSV or Parquet
                 files.
-                """),
-                (
-                "human",
-                "{input}"
-                )
-            ])    
+                """

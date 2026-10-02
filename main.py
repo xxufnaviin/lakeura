@@ -1,17 +1,19 @@
-import asyncio
-import sys
+import uvicorn
+from fastapi import FastAPI
+
 from agent.agent import Lakeura
+from models.api import ChatRequest
 
-# uses the selector loop instead of the Proactor loop.
-if sys.platform == "win32":
-    asyncio.set_event_loop_policy(
-        asyncio.WindowsSelectorEventLoopPolicy()
-    )
-
-
-# intialize agent
+# starts agent with new session
 agent = Lakeura()
+lakeura = FastAPI()
 
-# result = asyncio.run(agent.start_agent("Can you onboard tables for me @ C:\\Users\\User\\Documents\\My-Projects\\Data-Engineering\\lakeura\\data\\raw"))
-result = asyncio.run(agent.start_agent("how many customers churned in `telecom_churn`?"))
-print(result)
+# simple chat endpoint for frontend use
+@lakeura.post("/chat")
+async def chat(request: ChatRequest):
+    result = await agent.chat(request.message)
+    return {"response": result}
+
+# runs a simple backend server to receive chat messages 
+if __name__ == "__main__":
+    uvicorn.run(lakeura, host="127.0.0.1", port=8080)

@@ -37,7 +37,7 @@ def update_data(table: str, data: dict, condition: str) -> dict:
 
 @mcp.tool
 def onboard_tables(file_path: str) -> dict:
-    """Scan a raw directory and onboard CSV or Parquet files as Iceberg tables. 
+    """Use the file path directly given by the user to onboard tables without changing anything. 
     Returns the number of tables created or replaced."""
     return catalog.onboard_tables(file_path)
 
