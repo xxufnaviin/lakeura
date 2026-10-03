@@ -24,13 +24,14 @@ Apache Iceberg is a table format designed for **large analytic datasets** — it
 
 ### 🏗️ High-Level Architecture
 <img width="1280" height="585" alt="lakeura" src="https://github.com/user-attachments/assets/909b79b2-2ef6-4bc5-8849-6ea166e64f6f" />
+<br></br>
 
 | Layer | Technology |
 |---|---|
 | 🤖 AI Agent | LangGraph + LangChain |
 | ⚡ LLM | Groq API (`openai/gpt-oss-120b`) |
 | 🔌 Tool Protocol | Model Context Protocol (MCP) via `fastmcp` |
-| 🏔️ Data Warehouse | Apache Iceberg (local filesystem) |
+| 🏔️ Data Lakehouse | Apache Iceberg + HDFS |
 | ⚙️ Query Engine | Apache Spark via `pyspark` |
 | 🌐 Backend API | FastAPI + Uvicorn |
 | 🖥️ Desktop UI | Electron + React + Vite |
