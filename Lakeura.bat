@@ -6,7 +6,7 @@ echo [lakeura] Setting up environment...
 :: Create venv if it doesn't exist
 if not exist .venv (
     echo [lakeura] Creating virtual environment...
-    python -m venv .venv
+    py -3.10 -m venv .venv
 )
 
 :: Activate venv

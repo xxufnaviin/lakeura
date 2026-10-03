@@ -69,11 +69,23 @@ lakeura/
 
 ## 🚀 Getting Started
 
+> ⚠️ **Developer preview** — Lakeura currently requires manual environment setup (JDK, Hadoop winutils, environment variables). It is intended for developers comfortable configuring these dependencies. A non-technical user-friendly version is not yet available.
+
 ### ✅ Prerequisites
-- Python 3.10+
-- Node.js 18+
-- Java 8+ (required by PySpark)
+
+- **Python 3.10** — must be installed and accessible via the `py` launcher (`py -3.10`)
+- **Node.js 18+** — for the Electron/React frontend
+- **JDK 17** — required by PySpark/Spark; set `JAVA_HOME` to your JDK 17 installation (e.g. `C:\Program Files\Java\jdk-17`)
+- **Hadoop winutils** — Spark on Windows requires `winutils.exe` for the Hadoop version bundled with PySpark; set `HADOOP_HOME` to a directory containing `bin\winutils.exe` ([winutils releases](https://github.com/cdarlint/winutils))
+- **Apache Spark** — bundled automatically via `pyspark==4.2.0`; no separate Spark install needed
 - A [Groq API key](https://console.groq.com)
+
+> **Environment variables** — add these to your system or user environment before running:
+> ```
+> JAVA_HOME=C:\Program Files\Java\jdk-17
+> HADOOP_HOME=C:\hadoop
+> PATH=%PATH%;%JAVA_HOME%\bin;%HADOOP_HOME%\bin
+> ```
 
 ### 1. 🔑 Configure environment
 
