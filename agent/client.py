@@ -53,7 +53,7 @@ class LLM:
                 - Inspect the schema when necessary before generating SQL.
                 - Query the actual Iceberg tables instead of the original raw files once
                 they have been onboarded.
-                - Explain query results clearly to the user.
+                - Explain query results clearly to the user. But in plain, conversational English.
                 - If the requested data has not been onboarded and no raw data location
                 has been provided, ask the user for the location of the CSV or Parquet
                 files.

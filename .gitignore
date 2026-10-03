@@ -9,3 +9,7 @@ venv/
 .docs/
 data/raw/*
 artifacts/
+node_modules/
+frontend/dist/
+frontend/release/
+logs/
