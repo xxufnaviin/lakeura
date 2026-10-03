@@ -29,7 +29,7 @@ function stopServers() {
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 860,
+    width: 980,
     height: 720,
     minWidth: 620,
     minHeight: 500,

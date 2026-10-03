@@ -19,11 +19,11 @@ function parseTable(lines, key) {
     <div key={key} className={styles.tableWrap}>
       <table className={styles.mdTable}>
         <thead>
-          <tr>{head.map((h, i) => <th key={i}>{h}</th>)}</tr>
+          <tr>{head.map((h, i) => <th key={i}>{inlineTokens(h)}</th>)}</tr>
         </thead>
         <tbody>
           {body.map((row, ri) => (
-            <tr key={ri}>{row.map((cell, ci) => <td key={ci}>{cell}</td>)}</tr>
+            <tr key={ri}>{row.map((cell, ci) => <td key={ci}>{inlineTokens(cell)}</td>)}</tr>
           ))}
         </tbody>
       </table>
